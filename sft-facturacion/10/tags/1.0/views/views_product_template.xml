@@ -1,0 +1,21 @@
+<odoo>
+  <data>
+   
+      <record id="inventarios_sat_form_view" model="ir.ui.view">
+        <field name="name">product.template.cfdi_3_3.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="sale.product_template_form_view_invoice_policy"/>
+        <field name="arch" type="xml">           
+        <xpath expr="//page/separator" position="before">
+             <separator string="Configuracion CFDI 3.3"/>
+             <group colspan="4">
+             <field name="clave_prod_catalogo_sat_id"/>
+             <field name="clave_unidad_clave_catalogo_sat_id"/>
+          </group>
+        </xpath>
+    </field>
+
+    </record>
+
+  </data>
+</odoo>
