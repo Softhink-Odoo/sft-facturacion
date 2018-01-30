@@ -1,0 +1,19 @@
+<odoo>
+  <data>
+
+   <!--Nueva Factura Electronica-->    
+        <record model="ir.ui.view" id="account_invoice_refund_cfdi_3_3">
+        <field name="name">account.invoice.refund_cfdi_3_3.form</field>
+        <field name="model">account.invoice.refund</field>
+        <field name="inherit_id" ref="account.view_account_invoice_refund"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='description']" position="after">
+          <field name="tipo_de_relacion_id" attrs="{'invisible':[('filter_refund','=','refund')]}"/>
+        </xpath>
+
+      </field>
+      </record>
+
+    
+  </data>
+</odoo>

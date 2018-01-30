@@ -1,0 +1,118 @@
+<odoo>
+  <data>
+
+   <!--Nueva Factura Electronica-->    
+        <record model="ir.ui.view" id="purchase_mexico_form">
+        <field name="name">factura.electronica.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+       
+        <xpath expr="//field[@name='state']" position="replace">
+            <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,timbrada,timbrado cancelado,open,paid" statusbar_colors='{"validate":"blue","draft":"red"}'/> 
+        </xpath>
+
+
+        <xpath expr="/form/header/button" position="after">
+         <button name="empezar_a_pagar" string="Empezar a Pagar" states="timbrada" type="object"/>
+         <button name="descargar_factura_pdf" type="object" states="timbrada,open,paid" string="Descargar Factura PDF" icon="fa-file-pdf-o"/>
+         <button name="descargar_factura_xml" type="object" states="timbrada,open,paid" string="Descargar Archivo XML" icon="fa-file-text"/>
+         <button name="cancelar_factura_timbrada" string="Cancelar Factura Timbrada" states="timbrada" icon ="fa-times" type="object"/>
+      </xpath>
+    
+
+        <xpath expr="//field[@name='partner_id']" position="before">
+          <separator string="Emisor" colspan="2"/>
+          <field name="rfc_emisor"/>
+          <field name="compania_calle"/>
+          <field name="compania_ciudad"/>
+          <field name="compania_pais"/>
+          <field name="compania_estado"/>     
+          <field name="forma_pago_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+          <field name="codigo_postal_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+          <field name="tipo_de_relacion_id" attrs="{'invisible':[('type','=','out_invoice')]}"/>
+          <field name="uuid" class="oe_read_only"/>
+          <field name="cfdi_relacionados" class="oe_read_only" attrs="{'invisible':[('type','=','out_invoice')]}"/>
+          <field name = "no_parcialidad" attrs="{'invisible': [('no_parcialidad','=','0')]}"/>
+        </xpath>
+
+        <xpath expr="//field[@name='payment_term_id']" position="before">
+          <field name="fac_timbrada" style="color:#2A76C1;"/>
+        </xpath>
+
+        <xpath expr="//field[@name='partner_id']" position="attributes">
+          <attribute name="invisible">True</attribute>    
+        </xpath>   
+
+
+        <xpath expr="//field[@name='date_invoice']" position="before">
+          <separator string="Receptor" colspan="2"/>
+          <field name="rfc_cliente_factura" widget="mask_regex" data-inputmask-regex="^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1]))((-)?([A-Z\d]{3}))?$"/>
+        </xpath>
+
+        <xpath expr="//field[@name='date_invoice']" position="replace">
+          <field string="Clente" name="partner_id" context="{'search_default_customer':1, 'show_address': 1}" options="{&quot;always_reload&quot;: True}" domain="[('customer', '=', True)]"/>
+          <field name="metodo_pago_id" attrs="{'readonly':[('state','!=','draft')]}"/>
+          <field name="date_invoice"/>
+          <field name="uso_cfdi_id" attrs="{'readonly':[('state','!=','draft')]}"/>          
+        </xpath>
+
+        <xpath expr="//page[@name='other_info']" position="after">
+                    <page name="Observaciones" string="Observaciones CFDI 3.3">
+                        <group>
+                            <field name="observaciones"/>
+                        </group>
+                    </page>
+                </xpath>    
+
+      </field>
+      </record>
+
+      <record model="ir.ui.view" id="purchase_mexico_form_1">
+        <field name="name">invoice.mexico.form.detalle.buttons</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+         
+        <xpath expr="//button[@name='action_invoice_open']" position="replace">
+          <button name="action_invoice_open_2" string="Validar Y Timbrar" states="draft,timbrada cancelado" type="object"/>
+        </xpath>    
+
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="invoice_mexico_tree_detalle">
+        <field name="name">invoice_mexico_tree_detalle</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+         
+        <xpath expr="//field[@name='state']" position="before">
+          <field name="metodo_pago_id"/>
+        </xpath>    
+
+      </field>
+    </record>
+
+    
+     <record model="ir.ui.view" id="impuestos_mexico_form">
+        <field name="name">factura.electronica.impuestos.form</field>
+        <field name="model">account.tax</field>
+        <field name="inherit_id" ref="account.view_tax_form"/>
+        <field name="arch" type="xml">
+
+          <xpath expr="//notebook" position="inside">
+         <page name="Claves Sat" string="Asignar clave del catalogo del Sat">
+        <group>
+          <field name="tipo_impuesto_id"/>
+          <field name="tipo_factor_id"/>
+          <field name="tasa_o_cuota_id"/>
+          </group>
+        </page>
+
+        </xpath>
+        </field>
+      </record>
+  </data>
+</odoo>

@@ -1,0 +1,43 @@
+<odoo>
+  <data>    
+    <record model="ir.ui.view" id="sft_ayuda_error_factura_tree">
+      <field name="name">sft_ayuda.error.factura.tree</field>
+      <field name="model">sft_ayuda.error.factura</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="clave"/>
+          <field name="error"/>
+          <field name="solucion"/>
+          <field name="url" widget="url"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="sft_ayuda_error_factura_form">
+      <field name="name">sft_ayuda.error.factura.form</field>
+      <field name="model">sft_ayuda.error.factura</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <field name="clave"/>
+              <field name="error"/>
+              <field name="solucion"/>
+              <field name="url" widget="url"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="action_sft_ayuda_error_factura" model="ir.actions.act_window">
+        <field name="name">Errores Factura</field>
+        <field name="res_model">sft_ayuda.error.factura</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+      </record>
+ 
+    <menuitem name="SFT-Ayuda" id="sft_ayuda1_menu_principal"/>
+    <menuitem name="Errores Factura" id="sft_ayuda_menu_errores_factura" action="action_sft_ayuda_error_factura" parent="sft_ayuda1_menu_principal"/>
+  </data>
+</odoo>

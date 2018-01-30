@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="clientes_mexico_form">
+            <field name="name">formulario.clientes.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="rfc_cliente"/>
+                    <field name="nif"/>
+                </xpath>
+
+                <xpath expr="//field[@name='street']" position="after">
+                    <field name="colonia" placeholder="Colonia"/>
+                    <field name="numero_int" placeholder="No. Interior"/>
+                    <field name="numero_ext" placeholder="No. Exterior"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='city']" position="after">
+                    <field name="municipio" placeholder="Municipio"/>
+                </xpath>
+
+                <xpath expr="//field[@name='lang']" position="after">
+                    <field name="cfdi"/>
+                </xpath>
+
+                <xpath expr="//notebook/page/field/form/sheet/group/group[2]/field[@name='phone']" position="after">
+                    <field name="municipio"/>
+                </xpath>
+
+                <xpath expr="//page[@name='sales_purchases']" position="before">
+                    <page name="configuracion_cfdi_3_3" string="Preferencias CFDI 3.3">
+                        <group>
+                            <field name="metodo_pago_id"/>
+                            <field name="uso_cfdi_id"/>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="clientes_mexico_form_1">
+            <field name="name">formulario.clientes.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='property_account_position_id']" position="attributes">
+                    <attribute name="string">Regimen Fiscal</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+   <!--Nueva Factura Electronica-->    
+
+      <!--attrs="{'invisible': [('state','not in',('proforma','proforma2'))]}-->
+     
+  </data>
+</odoo>

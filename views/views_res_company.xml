@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+
+   <!--Nueva Factura Electronica-->  
+
+ 
+
+      <record model="ir.ui.view" id="res_company_mexico_form">
+        <field name="name">formulario.res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+        <xpath expr="//field[@name='company_registry']" position="attributes">
+          <attribute name="string">RFC</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='company_registry']" position="after">
+          <field name="property_account_position_id"/>
+        </xpath>
+
+
+        <xpath expr="//field[@name='vat']" position="attributes">
+          <attribute name="invisible">True</attribute>
+        </xpath>
+      </field>
+      </record>
+
+      <!--attrs="{'invisible': [('state','not in',('proforma','proforma2'))]}-->
+     
+  </data>
+</odoo>
